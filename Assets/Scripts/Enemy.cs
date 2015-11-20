@@ -21,31 +21,24 @@ public class Enemy : MonoBehaviour {
     {
         if (target == null) return;
 
+        var myAngle = RotationHelper.GetAngleFromQuaternion(transform.rotation);
         var angleToTarget = RotationHelper.GetAngleFromToTarget(transform.position, target.position);
+        var diff = RotationHelper.GetDifferenceBetweenAngles(myAngle, angleToTarget);
+        float nextAngle = transform.rotation.eulerAngles.z;
 
-        var currentAngle = RotationHelper.GetAngleFromQuaternion(transform.rotation);
-
-        /*
-        float nextRotation = currentAngle;
-        if(currentAngle > angleToTarget)
+        if(diff > 0)
         {
-            nextRotation = currentAngle - (turnSpeed * Time.fixedDeltaTime);
-            if(nextRotation < angleToTarget)
-            {
-                nextRotation = currentAngle;
-            }
-        }
-        else if(angleToTarget > currentAngle)
+            var mod = turnSpeed * Time.fixedDeltaTime;
+            if (mod > diff) mod = diff;
+            nextAngle += mod;
+        }else if(diff < 0)
         {
-            nextRotation = currentAngle + (turnSpeed * Time.fixedDeltaTime);
-            if(nextRotation > angleToTarget)
-            {
-                nextRotation = angleToTarget;
-            }
+            var mod = turnSpeed * Time.fixedDeltaTime;
+            if (mod < diff) mod = diff;
+            nextAngle -= mod;
         }
-        */
 
-        myRigidBody.MoveRotation(angleToTarget);
+        myRigidBody.MoveRotation(nextAngle);
 
         moveScript.Move(Time.fixedDeltaTime);
     }

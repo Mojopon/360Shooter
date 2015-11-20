@@ -16,4 +16,22 @@ public static class RotationHelper
         var angleToTarget = (rotationToTarget.eulerAngles.z + 360) % 360;
         return angleToTarget;
     }
+
+    public static float GetDifferenceBetweenAngles(float source, float target)
+    {
+        if(Mathf.Abs(source - target) > 180f)
+        {
+            if(source < 180f)
+            {
+                source += 360f;
+            }
+
+            if(target < 180f)
+            {
+                target += 360f;
+            }
+        }
+
+        return target - source;
+    }
 }

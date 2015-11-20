@@ -11,13 +11,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         controller = GetComponent<PlayerController>();
+        controller.SetSpeed(moveSpeed);
     }
 
     void Update()
     {
         var horizontalInput = Input.GetAxisRaw("Horizontal");
-        controller.Rotate(turnSpeed * horizontalInput);
-        var velocity = transform.rotation * Vector3.up * moveSpeed;
-        controller.Move(velocity);
+        controller.SetRotatingMovement(turnSpeed * horizontalInput);
     }
 }

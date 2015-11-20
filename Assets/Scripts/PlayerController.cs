@@ -4,37 +4,38 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour {
 
-    Vector2 velocity;
-    float swing;
+    private float moveSpeed;
+    private float swing;
 
-    Rigidbody2D myRigidBody;
+    private MoveForward moveScript;
+    private Rigidbody2D myRigidBody;
 
 	void Start () {
         myRigidBody = GetComponent<Rigidbody2D>();
+        moveScript = new MoveForward(myRigidBody, moveSpeed);
 	}
 	
-	public void Move(Vector2 _velocity)
+	public void SetSpeed(float _moveSpeed)
     {
-        velocity = _velocity;
+        moveSpeed = _moveSpeed;
+        if(moveScript!= null) 
+            moveScript.SetMoveSpeed(moveSpeed);
     }
 
-    public void Rotate(float _swing)
+    public void SetRotatingMovement(float _swing)
     {
         swing = -_swing;
     }
 
-    void Update()
-    {
-        //transform.Rotate(new Vector3(0, 0, 1), -swing * Time.deltaTime);
-    }
-
     void FixedUpdate()
     {
+        // turn the ship
         Quaternion rotation = transform.rotation;
         float z = rotation.eulerAngles.z;
         z += swing * Time.fixedDeltaTime;
         myRigidBody.MoveRotation(z);
 
-        myRigidBody.MovePosition(myRigidBody.position + velocity * Time.fixedDeltaTime);
+        // move forward
+        moveScript.Move(Time.fixedDeltaTime);
     }
 }

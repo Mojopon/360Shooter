@@ -6,22 +6,33 @@ public delegate void OnTriggerEnterEventHandler(Collider2D other);
 public class Boundary : MonoBehaviour {
 
     public event OnTriggerEnterEventHandler OnEnterBoundary;
-    BoundariesController controller;
     void Start()
     {
-        controller = GetComponentInParent<BoundariesController>();
-        if(controller != null)
-        {
-            Debug.Log("got a script from the parent");
-        }
         GetComponent<BoxCollider2D>().isTrigger = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if(IsToRemove(other))
+        {
+            Destroy(other.gameObject);
+            return;
+        }
+
         if(OnEnterBoundary != null)
         {
             OnEnterBoundary(other);
+        }
+    }
+
+    bool IsToRemove(Collider2D other)
+    {
+        switch(other.tag)
+        {
+            case "Shot":
+                return true;
+            default:
+                return false;
         }
     }
 }

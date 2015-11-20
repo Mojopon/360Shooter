@@ -53,6 +53,7 @@ public class BoundariesController : MonoBehaviour {
     void TeleportObjectToRightBoundary(Collider2D other)
     {
         var obj = other.transform;
+
         var margin = obj.position - leftBoundary.position;
         obj.position = new Vector3(obj.position.x + battleFieldSizeX - (margin.x * 2), obj.position.y, obj.position.z);
     }
@@ -60,6 +61,7 @@ public class BoundariesController : MonoBehaviour {
     void TeleportObjectToLeftBoundary(Collider2D other)
     {
         var obj = other.transform;
+  
         var margin = obj.position - rightBoundary.position;
         obj.position = new Vector3(obj.position.x - battleFieldSizeX - (margin.x * 2), obj.position.y, obj.position.z);
     }
@@ -67,6 +69,7 @@ public class BoundariesController : MonoBehaviour {
     void TeleportObjectToTopBoundary(Collider2D other)
     {
         var obj = other.transform;
+
         var margin = obj.position - bottomBoundary.position;
         obj.position = new Vector3(obj.position.x , obj.position.y + battleFieldSizeY - (margin.y * 2), obj.position.z);
     }
@@ -74,6 +77,7 @@ public class BoundariesController : MonoBehaviour {
     void TeleportObjectToBottomBoundary(Collider2D other)
     {
         var obj = other.transform;
+
         var margin = obj.position - topBoundary.position;
         obj.position = new Vector3(obj.position.x, obj.position.y - battleFieldSizeY - (margin.y * 2), obj.position.z);
     }

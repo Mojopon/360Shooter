@@ -6,6 +6,7 @@ public delegate void OnBoundaryEnter(Transform boundary, Collider2D other);
 public class BoundariesController : MonoBehaviour {
 
     public Transform target;
+    public Transform boundary;
     public float battleFieldSizeX = 50f;
     public float battleFieldSizeY = 50f;
 
@@ -16,33 +17,25 @@ public class BoundariesController : MonoBehaviour {
 
 	void Start ()
     {
-        var leftBoundaryObject = new GameObject("LeftBoundary");
-        leftBoundary = leftBoundaryObject.transform;
+        leftBoundary = Instantiate(boundary, Vector3.zero, Quaternion.identity) as Transform;
         leftBoundary.SetParent(transform);
         leftBoundary.position -= new Vector3(battleFieldSizeX / 2f, 0, 0);
         leftBoundary.localScale = new Vector3(1, battleFieldSizeY, 1);
-        leftBoundaryObject.AddComponent<Boundary>();
 
-        var rightBoundaryObject = new GameObject("RightBoundary");
-        rightBoundary = rightBoundaryObject.transform;
+        rightBoundary = Instantiate(boundary, Vector3.zero, Quaternion.identity) as Transform;
         rightBoundary.SetParent(transform);
         rightBoundary.position += new Vector3(battleFieldSizeX / 2f, 0, 0);
         rightBoundary.localScale = new Vector3(1, battleFieldSizeY, 1);
-        rightBoundaryObject.AddComponent<Boundary>();
 
-        var topBoundaryObject = new GameObject("TopBoundary");
-        topBoundary = topBoundaryObject.transform;
+        topBoundary = Instantiate(boundary, Vector3.zero, Quaternion.identity) as Transform;
         topBoundary.SetParent(transform);
         topBoundary.position += new Vector3(0, battleFieldSizeY / 2f, 0);
         topBoundary.localScale = new Vector3(battleFieldSizeX, 1, 1);
-        topBoundaryObject.AddComponent<Boundary>();
 
-        var bottomBoundaryObject = new GameObject("BottomBoundary");
-        bottomBoundary = bottomBoundaryObject.transform;
+        bottomBoundary = Instantiate(boundary, Vector3.zero, Quaternion.identity) as Transform;
         bottomBoundary.SetParent(transform);
         bottomBoundary.position -= new Vector3(0, battleFieldSizeY / 2f, 0);
         bottomBoundary.localScale = new Vector3(battleFieldSizeX, 1, 1);
-        bottomBoundaryObject.AddComponent<Boundary>();
 
         leftBoundary.GetComponent<Boundary>().OnEnterBoundary += new OnTriggerEnterEventHandler(TeleportObjectToRightBoundary);
         rightBoundary.GetComponent<Boundary>().OnEnterBoundary += new OnTriggerEnterEventHandler(TeleportObjectToLeftBoundary);

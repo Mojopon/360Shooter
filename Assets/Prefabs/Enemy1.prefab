@@ -83,7 +83,7 @@ CircleCollider2D:
   m_GameObject: {fileID: 191668}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2693c3270e8a87a44b9d54de5534a75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 10
   target: {fileID: 0}
   moveSpeed: 2
-  turnSpeed: 180
+  turnSpeed: 50
 --- !u!212 &21222500
 SpriteRenderer:
   m_ObjectHideFlags: 1

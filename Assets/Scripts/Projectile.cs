@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Projectile : MonoBehaviour
 {
+    public int damage = 1;
+
     float moveSpeed = 10;
 
     private Rigidbody2D myRigidbody;
@@ -27,5 +29,15 @@ public class Projectile : MonoBehaviour
     void FixedUpdate()
     {
         moveScript.Move(Time.fixedDeltaTime);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        IDamageable damageableObject = other.GetComponent<IDamageable>();
+        if(damageableObject!= null)
+        {
+            damageableObject.TakeHit(damage);
+        }
+        Destroy(gameObject);
     }
 }

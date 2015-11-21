@@ -13,26 +13,9 @@ public class Boundary : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(IsToRemove(other))
-        {
-            Destroy(other.gameObject);
-            return;
-        }
-
         if(OnEnterBoundary != null)
         {
             OnEnterBoundary(other);
-        }
-    }
-
-    bool IsToRemove(Collider2D other)
-    {
-        switch(other.tag)
-        {
-            case "Shot":
-                return true;
-            default:
-                return false;
         }
     }
 }

@@ -12,8 +12,9 @@ GameObject:
   - 61: {fileID: 6145668}
   - 50: {fileID: 5034632}
   - 114: {fileID: 11427134}
-  m_Layer: 0
-  m_Name: Shot
+  - 114: {fileID: 11403432}
+  m_Layer: 8
+  m_Name: PlayerBullet1
   m_TagString: Shot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,6 +61,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: .180000007, y: 1.08000004}
+--- !u!114 &11403432
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 147556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b765ea7941e1d42ad4ba0a217d4a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 5
 --- !u!114 &11427134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,6 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aef500922476f0d4895bc8624456d6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 3
 --- !u!212 &21275968
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -119,6 +133,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Shot
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: damage
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

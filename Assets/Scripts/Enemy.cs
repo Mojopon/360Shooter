@@ -2,7 +2,7 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : MonoBehaviour {
+public class Enemy : DamageableEntity {
 
     public Transform target;
     public float moveSpeed = 3f;
@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour {
 
     void Start()
     {
+        base.Start();
         myRigidBody = GetComponent<Rigidbody2D>();
         moveScript = new MoveForward(myRigidBody, moveSpeed);
     }

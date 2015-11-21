@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
@@ -6,6 +7,7 @@ public class GameManager : MonoBehaviour
     public Transform player;
     public BoundariesController boundariesController;
     public EnemySpawner enemySpawner;
+    public SpawnAlerter spawnAlerter;
 
     public float battleFieldSizeX = 50f;   
     public float battleFieldSizeY = 50f;
@@ -35,5 +37,6 @@ public class GameManager : MonoBehaviour
     {
         var newEnemySpawner = Instantiate(enemySpawner, Vector3.zero, Quaternion.identity) as EnemySpawner;
         newEnemySpawner.SetBattleFieldSize(battleFieldSizeX, battleFieldSizeY);
+        newEnemySpawner.spawnAlerter = spawnAlerter;
     }
 }

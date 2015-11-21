@@ -6,6 +6,8 @@ public class EnemySpawner : MonoBehaviour
     public Wave[] waves;
     public Enemy enemy;
 
+    public SpawnAlerter spawnAlerter;
+
     private int currentWaveNumber = 0;
 
     private Transform playerObject;
@@ -42,7 +44,9 @@ public class EnemySpawner : MonoBehaviour
                                               playerPosition.y + Random.Range(-battleFieldHeight / 2f, battleFieldHeight / 2f),
                                               0);
             var newEnemy = Instantiate(enemy, positionToSpawn, Quaternion.identity) as Enemy;
-            newEnemy.OnDeath += OnEnemyDeath;  
+            newEnemy.OnDeath += OnEnemyDeath;
+
+            spawnAlerter.AlertNextWave();
 
             yield return new WaitForSeconds(waitTime);
         }

@@ -39,14 +39,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6107e0f2e411346bba41394659b362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 466286, guid: abee884abd9f2c54fa381448b46b656d, type: 2}
+  waves:
+  - enemyCount: 3
+    timeBetweenSpawns: 2
+  - enemyCount: 5
+    timeBetweenSpawns: .5
+  - enemyCount: 10
+    timeBetweenSpawns: .200000003
+  enemy: {fileID: 11481754, guid: abee884abd9f2c54fa381448b46b656d, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: waves.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: wave.enemyCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: wave.timeBetweenSpawns
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 11481754, guid: abee884abd9f2c54fa381448b46b656d,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: waves.Array.data[0].enemyCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: waves.Array.data[0].timeBetweenSpawns
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: waves.Array.data[1].enemyCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: waves.Array.data[1].timeBetweenSpawns
+      value: .5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: waves.Array.data[2].timeBetweenSpawns
+      value: .200000003
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137450}

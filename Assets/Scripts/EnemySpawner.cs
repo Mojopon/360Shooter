@@ -3,8 +3,12 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public Transform enemy;
+    public Wave[] waves;
+    public Enemy enemy;
 
+    private int currentWaveNumber = 0;
+
+    private Transform playerObject;
     private float battleFieldWidth;
     private float battleFieldHeight;
 
@@ -13,23 +17,48 @@ public class EnemySpawner : MonoBehaviour
         battleFieldWidth = width;
         battleFieldHeight = height;
     }
-	
-    private float nextSpawn;
+
+    private int remainingEnemies;
     public void Update()
     {
-        Transform playerObject = GameObject.FindGameObjectWithTag("Player").transform;
+        playerObject = GameObject.FindGameObjectWithTag("Player").transform;
 
-        if(nextSpawn > Time.time || playerObject == null)
+        if(playerObject == null || remainingEnemies > 0 || currentWaveNumber >= waves.Length)
         {
             return;
         }
+        
+        StartCoroutine(SpawnWave(waves[currentWaveNumber]));
+    }
 
-        var playerPosition = playerObject.position;
-        var positionToSpawn = new Vector3(playerPosition.x + Random.Range(-battleFieldWidth / 2f, battleFieldWidth /2f),
-                                          playerPosition.y + Random.Range(-battleFieldHeight / 2f, battleFieldHeight / 2f),
-                                          0);
-        Instantiate(enemy, positionToSpawn, Quaternion.identity);
+    IEnumerator SpawnWave(Wave wave)
+    {
+        remainingEnemies = wave.enemyCount;
+        var waitTime = wave.timeBetweenSpawns;
 
-        nextSpawn = Time.time + 2;
+        for(int i = 0; i < wave.enemyCount; i++) { 
+            var playerPosition = playerObject.position;
+            var positionToSpawn = new Vector3(playerPosition.x + Random.Range(-battleFieldWidth / 2f, battleFieldWidth / 2f),
+                                              playerPosition.y + Random.Range(-battleFieldHeight / 2f, battleFieldHeight / 2f),
+                                              0);
+            var newEnemy = Instantiate(enemy, positionToSpawn, Quaternion.identity) as Enemy;
+            newEnemy.OnDeath += OnEnemyDeath;  
+
+            yield return new WaitForSeconds(waitTime);
+        }
+
+        currentWaveNumber++;
+    }
+
+    void OnEnemyDeath()
+    {
+        remainingEnemies--;
+    }
+
+    [System.Serializable]
+    public class Wave
+    {
+        public int enemyCount;
+        public float timeBetweenSpawns;
     }
 }

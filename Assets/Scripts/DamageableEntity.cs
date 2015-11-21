@@ -5,6 +5,8 @@ using System;
 public class DamageableEntity : MonoBehaviour, IDamageable {
 
     public int startingHealth;
+    public event Action OnDeath;
+
     protected int health;
     protected bool dead;
 
@@ -36,6 +38,10 @@ public class DamageableEntity : MonoBehaviour, IDamageable {
     protected void Die()
     {
         dead = true;
+        if(OnDeath!= null)
+        {
+            OnDeath();
+        }
         Destroy(gameObject);
     }
 }

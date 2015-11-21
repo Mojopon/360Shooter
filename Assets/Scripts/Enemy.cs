@@ -11,7 +11,7 @@ public class Enemy : DamageableEntity {
     private Rigidbody2D myRigidBody;
     private MoveForward moveScript;
 
-    void Start()
+    protected override void Start()
     {
         base.Start();
         myRigidBody = GetComponent<Rigidbody2D>();
@@ -20,7 +20,11 @@ public class Enemy : DamageableEntity {
 
     void FixedUpdate()
     {
-        if (target == null) return;
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+            if (target == null) return;
+        }
 
         var myAngle = RotationHelper.GetAngleFromQuaternion(transform.rotation);
         var angleToTarget = RotationHelper.GetAngleFromToTarget(transform.position, target.position);

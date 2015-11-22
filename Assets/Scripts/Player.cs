@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(PlayerTurretController))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IFieldEntity
 {
     public float moveSpeed = 5f;
     public float turnSpeed = 180f;
@@ -34,4 +34,13 @@ public class Player : MonoBehaviour
     {
         return Input.GetKey(KeyCode.Z);
     }
+
+    #region IFieldEntity
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    #endregion
 }

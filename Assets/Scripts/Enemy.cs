@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : DamageableEntity {
+public class Enemy : DamageableEntity, IEnemy, IServiceUser {
 
     public Transform target;
     public float moveSpeed = 3f;
@@ -16,6 +17,11 @@ public class Enemy : DamageableEntity {
         base.Start();
         myRigidBody = GetComponent<Rigidbody2D>();
         moveScript = new MoveForward(myRigidBody, moveSpeed);
+
+        var enemyLocator = serviceLocator.GetEnemyLocator();
+        enemyLocator.AddEnemy(this);
+
+        OnDeath += RemoveFromEnemyLocator;
     }
 
     void FixedUpdate()
@@ -47,4 +53,23 @@ public class Enemy : DamageableEntity {
 
         moveScript.Move(Time.fixedDeltaTime);
     }
+
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    void RemoveFromEnemyLocator()
+    {
+        var enemyLocator = serviceLocator.GetEnemyLocator();
+        enemyLocator.RemoveEntity(this);
+    }
+
+    #region IServiceUser
+    private IServiceLocator serviceLocator;
+    public void RegisterServiceLocator(IServiceLocator _serviceLocator)
+    {
+        serviceLocator = _serviceLocator;
+    }
+    #endregion
 }

@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 457642}
   - 212: {fileID: 21222500}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: EnemySprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,6 +143,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: moveSpeed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Name
+      value: EnemySprite
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

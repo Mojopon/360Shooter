@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour, IServiceUser
 {
     public Wave[] waves;
     public Enemy enemy;
@@ -40,11 +41,10 @@ public class EnemySpawner : MonoBehaviour
 
         for(int i = 0; i < wave.enemyCount; i++) { 
             var playerPosition = playerObject.position;
-            var positionToSpawn = new Vector3(playerPosition.x + Random.Range(-battleFieldWidth / 2f, battleFieldWidth / 2f),
-                                              playerPosition.y + Random.Range(-battleFieldHeight / 2f, battleFieldHeight / 2f),
+            var positionToSpawn = new Vector3(playerPosition.x + UnityEngine.Random.Range(-battleFieldWidth / 2f, battleFieldWidth / 2f),
+                                              playerPosition.y + UnityEngine.Random.Range(-battleFieldHeight / 2f, battleFieldHeight / 2f),
                                               0);
-            var newEnemy = Instantiate(enemy, positionToSpawn, Quaternion.identity) as Enemy;
-            newEnemy.OnDeath += OnEnemyDeath;
+            SpawnEnemy(positionToSpawn);
 
             spawnAlerter.AlertNextWave();
 
@@ -54,10 +54,27 @@ public class EnemySpawner : MonoBehaviour
         currentWaveNumber++;
     }
 
+    Enemy SpawnEnemy(Vector3 positionToSpawn)
+    {
+        var newEnemy = Instantiate(enemy, positionToSpawn, Quaternion.identity) as Enemy;
+        newEnemy.OnDeath += OnEnemyDeath;
+        newEnemy.RegisterServiceLocator(serviceLocator);
+
+        return newEnemy;
+    }
+
     void OnEnemyDeath()
     {
         remainingEnemies--;
     }
+
+    #region IServiceUser
+    private IServiceLocator serviceLocator;
+    public void RegisterServiceLocator(IServiceLocator _serviceLocator)
+    {
+        serviceLocator = _serviceLocator;
+    }
+    #endregion
 
     [System.Serializable]
     public class Wave

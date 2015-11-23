@@ -12,19 +12,19 @@ public class EnemyPointer : MonoBehaviour, IServiceUser
             Transform playerObject = GameObject.FindGameObjectWithTag("Player").transform;
             if (playerObject == null) return;
 
-            transform.position = playerObject.position;
-            transform.SetParent(playerObject);
             player = playerObject.GetComponent<Player>();
         }
 
+        transform.position = player.GetPosition();
         var enemyLocator = serviceLocator.GetEnemyLocator();
         var nearestEnemy = enemyLocator.GetNearestEnemyFromTheEntity(player);
 
         if (nearestEnemy == null) return;
 
         var angleToNearestEnemy = RotationHelper.GetAngleFromToTarget(player.GetPosition(), nearestEnemy.GetPosition());
+        var newAngle = Mathf.Lerp(transform.rotation.eulerAngles.z, angleToNearestEnemy, 0.5f);
 
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, angleToNearestEnemy);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, newAngle);
     }
 
     #region IServiceUser

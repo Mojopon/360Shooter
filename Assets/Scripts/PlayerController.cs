@@ -7,8 +7,11 @@ public class PlayerController
 {
     public float speed;
     public float turnSpeed = 180f;
+    public float chargePerSec = 1f;
 
+    private float currentChargeRate = 0;
     private IMovementController movementController;
+    private IChargeShotController chargeShotController;
 
     public PlayerController() { }
 
@@ -24,6 +27,34 @@ public class PlayerController
         movementController.Rotate(turning);
     }
 
+    public void Charge(bool isCharging, float timeStep)
+    {
+        switch(isCharging)
+        {
+            case true:
+                {
+                    currentChargeRate += chargePerSec * timeStep;
+                    if(currentChargeRate > 1.0f)
+                    {
+                        currentChargeRate = 1;
+                    }
+                }
+                break;
+            case false:
+                {
+                    currentChargeRate -= 2f * timeStep;
+                    if(currentChargeRate < 0)
+                    {
+                        currentChargeRate = 0;
+                    }
+                }
+                break;
+        }
+
+        Debug.Log(currentChargeRate);
+        chargeShotController.SetCurrentChargeRate(currentChargeRate);
+    }
+
     public void SetSpeed(float _speed)
     {
         speed = _speed;
@@ -32,5 +63,10 @@ public class PlayerController
     public void SetMovementController(IMovementController _movementController)
     {
         movementController = _movementController;
+    }
+
+    public void SetChargeShotController(IChargeShotController _chargeShotController)
+    {
+        chargeShotController = _chargeShotController;
     }
 }

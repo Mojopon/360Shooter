@@ -4,17 +4,20 @@ using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerTurretController))]
-public class Player : MonoBehaviour, IFieldEntity, IMovementController
+public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeShotController
 {
     public PlayerController controller;
 
-    Rigidbody2D myRigidbody;
-    PlayerTurretController turret;
+    private float currentChargeRate;
+
+    private Rigidbody2D myRigidbody;
+    private PlayerTurretController turret;
 
     void OnEnable()
     {
         Debug.Log("on enable");
         controller.SetMovementController(this);
+        controller.SetChargeShotController(this);
 
         myRigidbody = GetComponent<Rigidbody2D>();
         turret = GetComponent<PlayerTurretController>();
@@ -26,6 +29,8 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController
         {
             turret.Shoot();
         }
+
+        controller.Charge(isCharging(), Time.deltaTime);
     }
 
     public void MoveForward(Vector3 movement)
@@ -54,12 +59,33 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController
         return Input.GetKey(KeyCode.Z);
     }
 
-    #region IFieldEntity
+    bool isCharging()
+    {
+        return Input.GetKey(KeyCode.X);
+    }
 
+    public void Charging()
+    {
+    }
+
+    public void ChargeShot()
+    {
+    }
+
+    public void SetCurrentChargeRate(float chargeRate)
+    {
+        currentChargeRate = chargeRate;
+    }
+
+    public float GetCurrentChargeRate()
+    {
+        return currentChargeRate;
+    }
+
+    #region IFieldEntity
     public Vector3 GetPosition()
     {
         return transform.position;
     }
-
     #endregion
 }

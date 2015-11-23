@@ -2,41 +2,35 @@
 using System.Collections;
 using System;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour {
+[Serializable]
+public class PlayerController
+{
+    public float speed;
+    public float turnSpeed = 180f;
 
-    private float moveSpeed;
-    private float swing;
+    private IMovementController movementController;
 
-    private MoveForward moveScript;
-    private Rigidbody2D myRigidBody;
+    public PlayerController() { }
 
-	void Start () {
-        myRigidBody = GetComponent<Rigidbody2D>();
-        moveScript = new MoveForward(myRigidBody, moveSpeed);
-	}
-	
-	public void SetSpeed(float _moveSpeed)
+    public void MoveForward(Quaternion rotation)
     {
-        moveSpeed = _moveSpeed;
-        if(moveScript!= null) 
-            moveScript.SetMoveSpeed(moveSpeed);
+        var movement = MovementHelper.GetStepFromSpeedAndRotation(speed, rotation);
+        movementController.MoveForward(movement);
     }
 
-    public void SetRotatingMovement(float _swing)
+    public void Rotate(float input)
     {
-        swing = -_swing;
+        var turning = -input * turnSpeed;
+        movementController.Rotate(turning);
     }
 
-    void FixedUpdate()
+    public void SetSpeed(float _speed)
     {
-        // turn the ship
-        Quaternion rotation = transform.rotation;
-        float z = rotation.eulerAngles.z;
-        z += swing * Time.fixedDeltaTime;
-        myRigidBody.MoveRotation(z);
+        speed = _speed;
+    }
 
-        // move forward
-        moveScript.Move(Time.fixedDeltaTime);
+    public void SetMovementController(IMovementController _movementController)
+    {
+        movementController = _movementController;
     }
 }

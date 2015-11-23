@@ -1,33 +1,52 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
-[RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerTurretController))]
-public class Player : MonoBehaviour, IFieldEntity
+public class Player : MonoBehaviour, IFieldEntity, IMovementController
 {
-    public float moveSpeed = 5f;
-    public float turnSpeed = 180f;
+    public PlayerController controller;
 
-    PlayerController controller;
+    Rigidbody2D myRigidbody;
     PlayerTurretController turret;
 
-    void Start()
+    void OnEnable()
     {
-        controller = GetComponent<PlayerController>();
-        controller.SetSpeed(moveSpeed);
+        Debug.Log("on enable");
+        controller.SetMovementController(this);
 
+        myRigidbody = GetComponent<Rigidbody2D>();
         turret = GetComponent<PlayerTurretController>();
     }
 
     void Update()
     {
-        var horizontalInput = Input.GetAxisRaw("Horizontal");
-        controller.SetRotatingMovement(turnSpeed * horizontalInput);
-
         if(IsShooting())
         {
             turret.Shoot();
         }
+    }
+
+    public void MoveForward(Vector3 movement)
+    {
+        myRigidbody.MovePosition(transform.position + (movement * Time.fixedDeltaTime));
+    }
+
+    public void Rotate(float turning)
+    {
+        // turn the ship
+        Quaternion rotation = transform.rotation;
+        float z = rotation.eulerAngles.z;
+        z += turning * Time.fixedDeltaTime;
+        myRigidbody.MoveRotation(z);
+    }
+
+    void FixedUpdate()
+    {
+        var horizontalInput = Input.GetAxisRaw("Horizontal");
+        controller.Rotate(horizontalInput);
+        controller.MoveForward(transform.rotation);
     }
 
     bool IsShooting()

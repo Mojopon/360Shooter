@@ -99,8 +99,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f1fe18dc53a9844bbcf5d970ccd67f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  turnSpeed: 360
+  controller:
+    speed: 5
+    turnSpeed: 180
+    chargePerSec: 1
 --- !u!114 &11486302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,6 +153,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: controller.speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: controller.chargePerSec
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

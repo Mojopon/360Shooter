@@ -55,6 +55,14 @@ public class PlayerController
         chargeShotController.SetCurrentChargeRate(currentChargeRate);
     }
 
+    public void ChargeShot()
+    {
+        if(currentChargeRate >= 1)
+        {
+            chargeShotController.ChargeShot();
+        }
+    }
+
     public void SetSpeed(float _speed)
     {
         speed = _speed;

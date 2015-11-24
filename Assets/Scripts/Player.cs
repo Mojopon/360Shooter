@@ -12,6 +12,7 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 
     private Rigidbody2D myRigidbody;
     private PlayerTurretController turret;
+    
 
     void OnEnable()
     {
@@ -30,6 +31,10 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
             turret.Shoot();
         }
 
+        if(Input.GetKeyUp(KeyCode.X))
+        {
+            controller.ChargeShot();
+        }
         controller.Charge(isCharging(), Time.deltaTime);
     }
 
@@ -70,6 +75,7 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 
     public void ChargeShot()
     {
+        turret.ChargeShot();
     }
 
     public void SetCurrentChargeRate(float chargeRate)

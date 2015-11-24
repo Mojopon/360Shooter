@@ -51,7 +51,6 @@ public class PlayerController
                 break;
         }
 
-        Debug.Log(currentChargeRate);
         chargeShotController.SetCurrentChargeRate(currentChargeRate);
     }
 

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Turret : MonoBehaviour
 {
-    public Projectile projectile;
+    public Transform projectile;
     public float projectileSpeed = 10f;
     public float msBetweenShot = 100f;
 
@@ -13,8 +13,8 @@ public class Turret : MonoBehaviour
     {
         if (Time.time > nextShot)
         {
-            var newProjectile = Instantiate(projectile, transform.position, transform.rotation) as Projectile;
-            newProjectile.SetSpeed(projectileSpeed);
+            var newProjectile = Instantiate(projectile, transform.position, transform.rotation) as Transform;
+            newProjectile.GetComponent<IProjectile>().SetSpeed(projectileSpeed);
             nextShot = Time.time + msBetweenShot / 1000;
         }
     }   

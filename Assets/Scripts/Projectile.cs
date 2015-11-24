@@ -2,42 +2,58 @@
 using System.Collections;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviour, IProjectile
 {
     public int damage = 1;
+    public float speed = 10f;
 
-    float moveSpeed = 10;
-
-    private Rigidbody2D myRigidbody;
-    private MoveForward moveScript;
+    protected Rigidbody2D myRigidbody;
+    protected MoveForward moveScript;
 
     public void SetSpeed(float newSpeed)
     {
-        moveSpeed = newSpeed;
+        speed = newSpeed;
         if (moveScript != null)
         {
-            moveScript.SetMoveSpeed(moveSpeed);
+            moveScript.SetMoveSpeed(speed);
         }
     }
 
-    void Start()
+    protected void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-        moveScript = new MoveForward(myRigidbody, moveSpeed);
+        moveScript = new MoveForward(myRigidbody, speed);
     }
 
-    void FixedUpdate()
+    protected void FixedUpdate()
     {
         moveScript.Move(Time.fixedDeltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
+    {
+        if (IsDamageable(other))
+        {
+            DealDamage(other, other.GetComponent<IDamageable>());
+        }
+
+        Destroy(gameObject);
+    }
+
+    bool IsDamageable(Collider2D other)
     {
         IDamageable damageableObject = other.GetComponent<IDamageable>();
-        if(damageableObject!= null)
+        if (damageableObject != null)
         {
-            damageableObject.TakeHit(damage);
+            return true;
+        }else
+        {
+            return false;
         }
-        Destroy(gameObject);
+    }
+
+    protected virtual void DealDamage(Collider2D collider, IDamageable damageable)
+    {
+        damageable.TakeHit(damage);
     }
 }

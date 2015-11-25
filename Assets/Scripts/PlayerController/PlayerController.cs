@@ -5,19 +5,33 @@ using System;
 [Serializable]
 public class PlayerController
 {
-    public float speed;
     public float turnSpeed = 180f;
     public float chargePerSec = 1f;
 
+    public int currentGear = 1;
+    public int[] gears = new int[] {
+        3,
+        5,
+        7,
+    };
+
+    private float currentSpeed;
     private float currentChargeRate = 0;
     private IMovementController movementController;
     private IChargeShotController chargeShotController;
 
-    public PlayerController() { }
+    public PlayerController()
+    {
+    }
+
+    public void Initialize()
+    {
+        SetGear(currentGear);
+    }
 
     public void MoveForward(Quaternion rotation)
     {
-        var movement = MovementHelper.GetStepFromSpeedAndRotation(speed, rotation);
+        var movement = MovementHelper.GetStepFromSpeedAndRotation(currentSpeed, rotation);
         movementController.MoveForward(movement);
     }
 
@@ -62,9 +76,19 @@ public class PlayerController
         }
     }
 
-    public void SetSpeed(float _speed)
+    public void SetGear(int gearNumber)
     {
-        speed = _speed;
+        currentSpeed = gears[gearNumber];
+    }
+
+    public void Accelerate()
+    {
+
+    }
+
+    public void Decelerate()
+    {
+
     }
 
     public void SetMovementController(IMovementController _movementController)

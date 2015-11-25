@@ -19,6 +19,7 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
         Debug.Log("on enable");
         controller.SetMovementController(this);
         controller.SetChargeShotController(this);
+        controller.Initialize();
 
         myRigidbody = GetComponent<Rigidbody2D>();
         turret = GetComponent<PlayerTurretController>();

@@ -2,46 +2,36 @@
 using System.Collections;
 using System;
 
-public class DamageableEntity : MonoBehaviour, IDamageable {
-
-    public int startingHealth;
-    public event Action OnDeath;
-
-    protected int health;
-    protected bool dead;
-
-    protected virtual void Start()
+public class DamageableEntity : MonoBehaviour, IDamageable, IDamageController
+{
+    public int health;
+    public Action OnDeath
     {
-        health = startingHealth;
+        get { return damageable.OnDeath;}
+        set { damageable.OnDeath = value; }
+
     }
+
+    protected virtual void OnEnable()
+    {
+        damageable = new Damageable(health);
+        damageable.SetDamageController(this);
+    }
+
+    private Damageable damageable;
 
     public void TakeHit(int damage)
     {
-        TakeDamage(damage);
+        damageable.TakeHit(damage);
     }
 
     public bool IsDead()
     {
-        return dead;
+        return damageable.IsDead();
     }
 
-    protected void TakeDamage(int damage)
+    public void Die()
     {
-        health -= damage;
-
-        if(health <= 0 && !dead)
-        {
-            Die();
-        }
-    }
-
-    protected void Die()
-    {
-        dead = true;
-        if(OnDeath!= null)
-        {
-            OnDeath();
-        }
         Destroy(gameObject);
     }
 }

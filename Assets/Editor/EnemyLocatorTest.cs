@@ -27,5 +27,8 @@ public class EnemyLocatorTest
         var nearestEnemy = enemyLocator.GetNearestEnemyFromTheEntity(player);
 
         Assert.AreEqual(enemyOne, nearestEnemy);
+        enemyLocator.RemoveEntity(enemyOne);
+        nearestEnemy = enemyLocator.GetNearestEnemyFromTheEntity(player);
+        Assert.AreEqual(enemyTwo, nearestEnemy);
     }
 }

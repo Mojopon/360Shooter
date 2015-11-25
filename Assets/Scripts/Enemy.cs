@@ -12,9 +12,8 @@ public class Enemy : DamageableEntity, IEnemy, IServiceUser {
     private Rigidbody2D myRigidBody;
     private MoveForward moveScript;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
         myRigidBody = GetComponent<Rigidbody2D>();
         moveScript = new MoveForward(myRigidBody, moveSpeed);
 

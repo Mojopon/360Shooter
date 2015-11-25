@@ -584,53 +584,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   alertText: {fileID: 812811832}
---- !u!1001 &1534985873
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 457700, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11464358, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-      propertyPath: projectileSpeed
-      value: 40
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5026704, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: e88bcd32cc1b2db45adc9a4ef1f51792, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1813028132
 GameObject:
   m_ObjectHideFlags: 0

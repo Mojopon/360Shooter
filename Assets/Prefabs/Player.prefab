@@ -24,7 +24,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467458}
-  - 50: {fileID: 5026704}
   - 114: {fileID: 11464358}
   m_Layer: 0
   m_Name: Cannon
@@ -90,22 +89,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 457700}
   m_RootOrder: 1
---- !u!50 &5026704
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 129150}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!50 &5034722
 Rigidbody2D:
   serializedVersion: 2
@@ -162,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 410902, guid: 7deaf2614d9d5db4eb493b127c5d183d, type: 2}
-  projectileSpeed: 10
+  projectileSpeed: 40
   msBetweenShot: 100
 --- !u!114 &11486302
 MonoBehaviour:

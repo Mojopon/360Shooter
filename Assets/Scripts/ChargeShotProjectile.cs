@@ -11,7 +11,13 @@ public class ChargeShotProjectile : Projectile
         base.DealDamage(collider, damageable);
         if(damageable.IsDead())
         {
-            Instantiate(secondBullet, collider.transform.position, Quaternion.identity);
+
+            for(int i = 0; i < numberToSpreadSecondBullets; i++)
+            {
+                var transform = Instantiate(secondBullet, collider.transform.position, Quaternion.identity) as Transform;
+                var angle = (360 / numberToSpreadSecondBullets) * i;
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.x, angle);
+            }
         }
     }
 }

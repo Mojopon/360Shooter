@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour, IProjectile
 {
     public int damage = 1;
     public float speed = 10f;
+    public float lifeTime = 5f;
 
     protected Rigidbody2D myRigidbody;
     protected MoveForward moveScript;
@@ -21,6 +22,8 @@ public class Projectile : MonoBehaviour, IProjectile
 
     protected void Start()
     {
+        Destroy(gameObject, lifeTime);
+
         myRigidbody = GetComponent<Rigidbody2D>();
         moveScript = new MoveForward(myRigidbody, speed);
     }

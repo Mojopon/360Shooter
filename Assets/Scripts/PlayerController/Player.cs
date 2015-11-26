@@ -4,13 +4,15 @@ using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerTurretController))]
-public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeShotController
+public class Player : MonoBehaviour, IFieldEntity, IMovementControler, IChargeShotController
 {
     public PlayerController controller;
 
     public Transform boostParticle;
 
     private float currentSpeed;
+    private float currentSpeedRate;
+
     private float currentChargeRate;
 
     private float previousVerticalInput;
@@ -79,6 +81,11 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
         float z = rotation.eulerAngles.z;
         z += turning * Time.fixedDeltaTime;
         myRigidbody.MoveRotation(z);
+    }
+
+    public float GetCurrentSpeedRate()
+    {
+        return controller.GetCurrentSpeedRate();
     }
 
     #endregion

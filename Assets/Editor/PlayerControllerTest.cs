@@ -34,7 +34,7 @@ public class PlayerControllerTest
     [Test]
     public void ShouldAccelerateAndDecelerate()
     {
-        IMovementController movementController = Substitute.For<IMovementController>();
+        IMovementControler movementController = Substitute.For<IMovementControler>();
         int defaultGear = 1;
         int[] gears = new int[]
         {
@@ -50,11 +50,13 @@ public class PlayerControllerTest
         // Should set default speed
         controller.Initialize();
         movementController.Received().SetSpeed(gears[1]);
+        Assert.AreEqual((1f / (gears.Length  - controller.currentGear)), controller.GetCurrentSpeedRate());
 
         // Should change gear and accelerate
         movementController.ClearReceivedCalls();
         controller.Accelerate();
         movementController.Received().SetSpeed(gears[2]);
+        Assert.AreEqual((1f / (gears.Length - controller.currentGear)), controller.GetCurrentSpeedRate());
 
         // should not accelerate when its already highest gear
         movementController.ClearReceivedCalls();
@@ -68,6 +70,8 @@ public class PlayerControllerTest
         movementController.ClearReceivedCalls();
         controller.Decelerate();
         movementController.Received().SetSpeed(gears[0]);
+        Assert.AreEqual((1f / (gears.Length - controller.currentGear)), controller.GetCurrentSpeedRate());
+
 
         // should not decelerate when its already lowest gear
         movementController.ClearReceivedCalls();

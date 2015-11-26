@@ -15,8 +15,9 @@ public class PlayerController
         7,
     };
 
+    private float currentSpeedRate = 0;
     private float currentChargeRate = 0;
-    private IMovementController movementController;
+    private IMovementControler movementController;
     private IChargeShotController chargeShotController;
 
     public PlayerController() { }
@@ -96,7 +97,12 @@ public class PlayerController
         SetSpeedFromCurrentGear();
     }
 
-    public void SetMovementController(IMovementController _movementController)
+    public float GetCurrentSpeedRate()
+    {
+        return 1f / (gears.Length - currentGear);
+    }
+
+    public void SetMovementController(IMovementControler _movementController)
     {
         movementController = _movementController;
     }

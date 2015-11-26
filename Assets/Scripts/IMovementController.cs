@@ -3,6 +3,6 @@ using System.Collections;
 
 public interface IMovementController
 {
-    void MoveForward(Vector3 movement);
+    void SetSpeed(float speed);
     void Rotate(float turning);
 }

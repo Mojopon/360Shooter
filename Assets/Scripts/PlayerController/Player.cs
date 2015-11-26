@@ -8,7 +8,10 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 {
     public PlayerController controller;
 
+    private float currentSpeed;
     private float currentChargeRate;
+
+    private float previousVerticalInput;
 
     private Rigidbody2D myRigidbody;
     private PlayerTurretController turret;
@@ -16,7 +19,6 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 
     void OnEnable()
     {
-        Debug.Log("on enable");
         controller.SetMovementController(this);
         controller.SetChargeShotController(this);
         controller.Initialize();
@@ -27,6 +29,17 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 
     void Update()
     {
+        if (Input.GetAxisRaw("Vertical") == 0) ReceiveNextVerticalInput();
+
+        if(IsAccelerating())
+        {
+            controller.Accelerate();
+        }
+        else if(IsDecelerating())
+        {
+            controller.Decelerate();
+        }
+
         if(IsShooting())
         {
             turret.Shoot();
@@ -39,9 +52,16 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
         controller.Charge(isCharging(), Time.deltaTime);
     }
 
-    public void MoveForward(Vector3 movement)
+    void Move(Vector3 movement)
     {
         myRigidbody.MovePosition(transform.position + (movement * Time.fixedDeltaTime));
+    }
+
+    #region IMovementController Method Group
+
+    public void SetSpeed(float speed)
+    {
+        currentSpeed = speed;
     }
 
     public void Rotate(float turning)
@@ -53,11 +73,15 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
         myRigidbody.MoveRotation(z);
     }
 
+    #endregion
+
     void FixedUpdate()
     {
         var horizontalInput = Input.GetAxisRaw("Horizontal");
         controller.Rotate(horizontalInput);
-        controller.MoveForward(transform.rotation);
+
+        var movement = MovementHelper.GetMovementToForward(currentSpeed, transform.rotation);
+        Move(movement);
     }
 
     bool IsShooting()
@@ -68,6 +92,35 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
     bool isCharging()
     {
         return Input.GetKey(KeyCode.X);
+    }
+
+    void ReceiveNextVerticalInput()
+    {
+        previousVerticalInput = 0;
+    }
+
+    bool IsAccelerating()
+    {
+        var verticalInput = Input.GetAxisRaw("Vertical");
+        if(previousVerticalInput == 0 && verticalInput == 1)
+        {
+            previousVerticalInput = verticalInput;
+            return true;
+        }
+
+        return false;
+    }
+
+    bool IsDecelerating()
+    {
+        var verticalInput = Input.GetAxisRaw("Vertical");
+        if (previousVerticalInput == 0 && verticalInput == -1)
+        {
+            previousVerticalInput = verticalInput;
+            return true;
+        }
+
+        return false;
     }
 
     public void Charging()

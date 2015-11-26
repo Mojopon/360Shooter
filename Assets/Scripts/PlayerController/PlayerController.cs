@@ -15,24 +15,15 @@ public class PlayerController
         7,
     };
 
-    private float currentSpeed;
     private float currentChargeRate = 0;
     private IMovementController movementController;
     private IChargeShotController chargeShotController;
 
-    public PlayerController()
-    {
-    }
+    public PlayerController() { }
 
     public void Initialize()
     {
-        SetGear(currentGear);
-    }
-
-    public void MoveForward(Quaternion rotation)
-    {
-        var movement = MovementHelper.GetStepFromSpeedAndRotation(currentSpeed, rotation);
-        movementController.MoveForward(movement);
+        SetSpeedFromCurrentGear();
     }
 
     public void Rotate(float input)
@@ -76,19 +67,33 @@ public class PlayerController
         }
     }
 
-    public void SetGear(int gearNumber)
+    public void SetSpeedFromCurrentGear()
     {
-        currentSpeed = gears[gearNumber];
+        movementController.SetSpeed(gears[currentGear]);
     }
 
     public void Accelerate()
     {
+        currentGear++;
+        if(currentGear >= gears.Length)
+        {
+            currentGear = gears.Length - 1;
+            return;
+        }
 
+        SetSpeedFromCurrentGear();
     }
 
     public void Decelerate()
     {
+        currentGear--;
+        if (currentGear < 0)
+        {
+            currentGear = 0;
+            return;
+        }
 
+        SetSpeedFromCurrentGear();
     }
 
     public void SetMovementController(IMovementController _movementController)

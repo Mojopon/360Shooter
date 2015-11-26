@@ -130,9 +130,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller:
-    speed: 5
     turnSpeed: 180
     chargePerSec: 1
+    currentGear: 1
+    gears: 030000000500000007000000
+  boostParticle: {fileID: 454348, guid: 23b58787e068acc4fa3c5d652e932b2d, type: 2}
 --- !u!114 &11464358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -206,6 +208,10 @@ Prefab:
       propertyPath: controller.chargePerSec
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: boostParticle
+      value: 
+      objectReference: {fileID: 454348, guid: 23b58787e068acc4fa3c5d652e932b2d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 140882}

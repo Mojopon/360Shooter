@@ -8,6 +8,8 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 {
     public PlayerController controller;
 
+    public Transform boostParticle;
+
     private float currentSpeed;
     private float currentChargeRate;
 
@@ -33,7 +35,13 @@ public class Player : MonoBehaviour, IFieldEntity, IMovementController, IChargeS
 
         if(IsAccelerating())
         {
+            var previousSpeed = currentSpeed;
             controller.Accelerate();
+            if (previousSpeed != currentSpeed)
+            {
+                var newParticle = Instantiate(boostParticle, transform.position, transform.rotation) as Transform;
+                newParticle.SetParent(transform);
+            }
         }
         else if(IsDecelerating())
         {
